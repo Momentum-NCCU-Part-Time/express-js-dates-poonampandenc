@@ -1,6 +1,6 @@
 const express = require("express");
+const cors = require("cors");
 const morgan = require("morgan");
-// const dates = require("dayjs");
 const dayjs = require("dayjs");
 dayjs().format()
 
@@ -8,12 +8,15 @@ const port = 3000;
 
 const app = express();
 
+app.use(cors());
+
 app.use(morgan("dev"));
 
 var now = dayjs()
 
 app.get("/api/dates/", (req, res) => {
   res.json({ date: `${dates [dayjs().format(dddd, MMMM D, YYYY)]}` });
+console.log(message: date is today)
 });
 
 // app.get('/api/emoji/:name', (req, res) => {
@@ -30,6 +33,11 @@ app.get("/api/dates/", (req, res) => {
     //}
   // });
   
+  app.get('*', function (req, res) {
+    res.status(404).json({ error: 'route not found' })
+  })
+  
+
   app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
   });
